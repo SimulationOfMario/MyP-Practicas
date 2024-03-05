@@ -36,23 +36,24 @@ public class BankAccount
     // Calculate the payment per month for a loan
     public double payment(double total_amount, double interest, int npayments)
     {
-
         return total_amount * (interest * Math.pow((1 + interest), npayments) / (Math.pow((1 + interest), npayments) - 1));
     }
 
     // Calculate the pending amount for a loan in a month
-    public double pending (double amount, double inte, int npayments, int month)
+    public double pending(double amount, double inte, int npayments, int month)
     {
         double res;
-        if(month==0)
+
+        if(month == 0)
         {
-            res=amount;
+            res = amount;
         }
         else
         {
-            double ant=pending(amount, inte, npayments, month-1);
-            res = ant - (payment(amount,inte,npayments) - inte*ant);
+            double ant = pending(amount, inte, npayments, month - 1);
+            res = ant - (payment(amount, inte, npayments) - inte * ant);
         }
+        
         return res;
     }
 }

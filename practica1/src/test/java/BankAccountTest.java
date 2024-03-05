@@ -172,7 +172,8 @@ public class BankAccountTest
     }
 
     /**
-     * 
+     * Realizar una llamada a Payment con unos valores aceptables proporciona
+     * la salida que debe ser con un delta de 0.001 
      */
     @Test 
     public void NormalPaymentGivesCorrectOutput_Test()
@@ -190,4 +191,45 @@ public class BankAccountTest
         assertEquals(expected, output, 0.001);
     }
 
+    /**
+     * Realiza la llamada a Pending con unos valores aceptables proporciona
+     * la salida que debe ser con un delta de 0.001
+     */
+    @Test 
+    public void NormalPendingGivesCorrectOutput_Test()
+    {
+        // Arrange
+        double amount = 10000;
+        double interest = 0.001;
+        int npayments = 12;
+        int month = 1;
+        double expected = 9171.24;
+ 
+        // Act 
+        double output = bc.pending(amount, interest, npayments, month);
+ 
+        // Assert
+        assertEquals(expected, output, 0.001);
+    }
+
+    /**
+     * Si a Pending se establece como parámetro month cero,
+     * el output debe ser el parámetro amount introducido
+     */
+    @Test
+    public void ZeroMonthInPendingGivesOutputEqualsToAmount_Test()
+    {
+        // Arrange
+        double amount = 10000;
+        double interest = 0.001;
+        int npayments = 12;
+        int month = 0;
+        double expected = amount;
+ 
+        // Act 
+        double output = bc.pending(amount, interest, npayments, month);
+ 
+        // Assert
+        assertEquals(expected, output);
+    }
 }
