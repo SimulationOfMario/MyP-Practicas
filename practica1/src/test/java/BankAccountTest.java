@@ -111,6 +111,10 @@ public class BankAccountTest
         assertEquals(output2, expected);
     }
 
+    /**
+     * Realizar una retirada de cero amount de dinero implica que 
+     * el balance de la cuenta no cambie.
+     */
     @Test
     public void BalanceAfterAZeroAmountWithdrawIsCorrect_Test()
     {
@@ -127,11 +131,44 @@ public class BankAccountTest
         assertEquals(output2, expected);
     }
 
+    /**
+     * Realizar una retirada de justo el balance actual de la cuenta
+     * implica que el balance se quede a cero.
+     */
     @Test
     public void BalanceAfterTheCompleteBalanceWithdrawIsZero_Test()
     {
+        // Arrange
+        int amount = bc.getBalance();
+        int expected = 0;
 
+        // Act
+        boolean output1 = bc.withdraw(amount);
+        int output2 = bc.getBalance();
+
+        // Assert
+        assertTrue(output1);
+        assertEquals(output2, expected);
     }
 
+    /**
+     * Realizar una retirada de más que el balance actual de la cuenta
+     * implica que no se retire nada y que se devuelva false.
+     */
+    @Test 
+    public void MoreThanAccountBalanceWithdrawIsNotPossible_Test()
+    {
+        // Arrange
+        int amount = bc.getBalance() + 10;
+        int expected = bc.getBalance();
+
+        // Act
+        boolean output1 = bc.withdraw(amount);
+        int output2 = bc.getBalance();
+
+        // Assert
+        assertFalse(output1);
+        assertEquals(output2, expected);
+    }
 
 }
