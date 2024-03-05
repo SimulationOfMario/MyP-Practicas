@@ -37,7 +37,7 @@ public class BankAccount
     public double payment(double total_amount, double interest, int npayments)
     {
 
-        return total_amount*(interest*Math.pow((1+interest), npayments)/(Math.pow((1+interest), npayments)-1));
+        return total_amount * (interest * Math.pow((1 + interest), npayments) / (Math.pow((1 + interest), npayments) - 1));
     }
 
     // Calculate the pending amount for a loan in a month

@@ -29,7 +29,7 @@ public class BankAccountTest
         int output = bc.getBalance();
 
         // Assert
-        assertEquals(output, expected);
+        assertEquals(expected, output);
     }
 
     /**
@@ -48,8 +48,8 @@ public class BankAccountTest
         int output2 = bc.getBalance();
         
         // Assert
-        assertEquals(output1, expected);
-        assertEquals(output2, expected);
+        assertEquals(expected, output1);
+        assertEquals(expected, output2);
     }
 
     /**
@@ -68,8 +68,8 @@ public class BankAccountTest
         int output2 = bc.getBalance();
         
         // Assert
-        assertEquals(output1, expected);
-        assertEquals(output2, expected);
+        assertEquals(expected, output1);
+        assertEquals(expected, output2);
     }
 
     /**
@@ -108,7 +108,7 @@ public class BankAccountTest
 
         // Assert
         assertTrue(output1);
-        assertEquals(output2, expected);
+        assertEquals(expected, output2);
     }
 
     /**
@@ -128,7 +128,7 @@ public class BankAccountTest
 
         // Assert
         assertTrue(output1);
-        assertEquals(output2, expected);
+        assertEquals(expected, output2);
     }
 
     /**
@@ -148,7 +148,7 @@ public class BankAccountTest
 
         // Assert
         assertTrue(output1);
-        assertEquals(output2, expected);
+        assertEquals(expected, output2);
     }
 
     /**
@@ -168,7 +168,26 @@ public class BankAccountTest
 
         // Assert
         assertFalse(output1);
-        assertEquals(output2, expected);
+        assertEquals(expected, output2);
+    }
+
+    /**
+     * 
+     */
+    @Test 
+    public void NormalPaymentGivesCorrectOutput_Test()
+    {
+        // Arrange
+        double total_amount = 10000;
+        double interest = 0.001;
+        int npayments = 12;
+        double expected = 838.759;
+
+        // Act 
+        double output = bc.payment(total_amount, interest, npayments);
+
+        // Assert
+        assertEquals(expected, output, 0.001);
     }
 
 }
