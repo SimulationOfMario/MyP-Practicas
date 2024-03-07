@@ -4,57 +4,76 @@ public class BankAccount
 {
 <span class="fc" id="L5">    private int balance = 0;</span>
 
-    public BankAccount(int startingBalance) 
-<span class="fc" id="L8">    {</span>
+<span class="fc" id="L7">    public BankAccount(int startingBalance) </span>
+    {
 <span class="fc" id="L9">        this.balance = startingBalance;</span>
 <span class="fc" id="L10">    }</span>
 
     public boolean withdraw(int amount) 
     {
-<span class="fc bfc" id="L14" title="All 2 branches covered.">        if(balance &gt;= amount) </span>
+<span class="fc bfc" id="L14" title="All 2 branches covered.">        if (amount &lt; 0)</span>
+<span class="fc" id="L15">            throw new IllegalArgumentException(&quot;Amount cannot be negative&quot;);</span>
+
+<span class="fc bfc" id="L17" title="All 2 branches covered.">        if(balance &gt;= amount) </span>
         {
-<span class="fc" id="L16">            balance -= amount;</span>
-<span class="fc" id="L17">            return true;</span>
+<span class="fc" id="L19">            balance -= amount;</span>
+<span class="fc" id="L20">            return true;</span>
         }
-<span class="fc" id="L19">        return false;</span>
+<span class="fc" id="L22">        return false;</span>
     }
 
     public int deposit(int amount) 
     {
-<span class="fc bfc" id="L24" title="All 2 branches covered.">        if (amount &lt; 0)</span>
-<span class="fc" id="L25">            throw new IllegalArgumentException(&quot;Amount cannot be negative&quot;);</span>
+<span class="fc bfc" id="L27" title="All 2 branches covered.">        if (amount &lt; 0)</span>
+<span class="fc" id="L28">            throw new IllegalArgumentException(&quot;Amount cannot be negative&quot;);</span>
 
-<span class="fc" id="L27">        balance += amount;</span>
-<span class="fc" id="L28">        return balance;</span>
+<span class="fc" id="L30">        balance += amount;</span>
+<span class="fc" id="L31">        return balance;</span>
     }
 
     public int getBalance() 
     {
-<span class="fc" id="L33">        return balance;</span>
+<span class="fc" id="L36">        return balance;</span>
     }
 
     // Calculate the payment per month for a loan
     public double payment(double total_amount, double interest, int npayments)
     {
-<span class="fc" id="L39">        return total_amount * (interest * Math.pow((1 + interest), npayments) / (Math.pow((1 + interest), npayments) - 1));</span>
+<span class="fc bfc" id="L42" title="All 2 branches covered.">        if(interest &lt;= 0) </span>
+<span class="fc" id="L43">            throw new IllegalArgumentException(&quot;Interest cannot be negative or zero&quot;);</span>
+
+<span class="fc bfc" id="L45" title="All 2 branches covered.">        if(npayments &lt;= 0) </span>
+<span class="fc" id="L46">            throw new IllegalArgumentException(&quot;Number of payments cannot be negative or zero&quot;);</span>
+        
+<span class="fc bfc" id="L48" title="All 2 branches covered.">        if(total_amount &lt; 0) </span>
+<span class="fc" id="L49">            throw new IllegalArgumentException(&quot;Total amount cannot be negative&quot;);</span>
+
+<span class="fc" id="L51">        return total_amount * (interest * Math.pow((1 + interest), npayments) / (Math.pow((1 + interest), npayments) - 1));</span>
     }
 
     // Calculate the pending amount for a loan in a month
     public double pending(double amount, double inte, int npayments, int month)
     {
+<span class="fc bfc" id="L57" title="All 2 branches covered.">        if(month &lt; 0)</span>
+<span class="fc" id="L58">            throw new IllegalArgumentException(&quot;Month value cannot be negative&quot;);</span>
+        
         double res;
 
-<span class="fc bfc" id="L47" title="All 2 branches covered.">        if(month == 0)</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">        if(month == 0) </span>
         {
-<span class="fc" id="L49">            res = amount;</span>
-        }
+<span class="fc" id="L64">            res = amount;</span>
+<span class="fc" id="L65">        }</span>
+<span class="fc bfc" id="L66" title="All 4 branches covered.">        else if (month &gt; npayments &amp;&amp; npayments &gt; 0)</span>
+        {
+<span class="fc" id="L68">            res = 0;</span>
+<span class="fc" id="L69">        }</span>
         else
         {
-<span class="fc" id="L53">            double ant = pending(amount, inte, npayments, month - 1);</span>
-<span class="fc" id="L54">            res = ant - (payment(amount, inte, npayments) - inte * ant);</span>
+<span class="fc" id="L72">            double ant = pending(amount, inte, npayments, month - 1);</span>
+<span class="fc" id="L73">            res = ant - (payment(amount, inte, npayments) - inte * ant);</span>
         }
         
-<span class="fc" id="L57">        return res;</span>
+<span class="fc" id="L76">        return res;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

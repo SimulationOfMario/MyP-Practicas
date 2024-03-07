@@ -7,15 +7,16 @@
     {
 <span class="nc" id="L8">        BankAccount bank = new BankAccount(10);</span>
 <span class="nc" id="L9">        double total_amount = 10000; </span>
-<span class="nc" id="L10">        double interes = 0.001;</span>
-<span class="nc" id="L11">        int months = 12;</span>
+<span class="nc" id="L10">        double interes = 0.01;</span>
+<span class="nc" id="L11">        int npayments = 12;</span>
+<span class="nc" id="L12">        int month = 13;</span>
 
-<span class="nc" id="L13">        System.out.printf(&quot;Load payment of amount %f, with interes %f and in %d months is: %f\n&quot;, total_amount, </span>
-<span class="nc" id="L14">            interes, months, bank.payment(total_amount, interes, months));</span>
+<span class="nc" id="L14">        System.out.printf(&quot;Load payment of amount %f, with interes %f and in %d months is: %f\n&quot;, total_amount, </span>
+<span class="nc" id="L15">            interes, npayments, bank.payment(total_amount, interes, npayments));</span>
 
-<span class="nc" id="L16">        System.out.printf(&quot;Load pending payment of amount %f, with interes %f, %d months, in month %d is: %f\n&quot;, total_amount, </span>
-<span class="nc" id="L17">            interes, months, 2, bank.pending(total_amount, interes, months, 2));</span>
-<span class="nc" id="L18">    }</span>
+<span class="nc" id="L17">        System.out.printf(&quot;Load pending payment of amount %f, with interes %f, %d months, in month %d is: %f\n&quot;, total_amount, </span>
+<span class="nc" id="L18">            interes, npayments, month, bank.pending(total_amount, interes, npayments, month));</span>
+<span class="nc" id="L19">    }</span>
 
     
 }
