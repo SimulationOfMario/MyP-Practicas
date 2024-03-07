@@ -335,4 +335,70 @@ public class BankAccountTest
         // Assert
         assertEquals(expected, output);
     }
+
+    /**
+     * Si a Pending se establece como parámetro month el mismo que npayments,
+     * el output debe ser cero
+     */
+    @Test
+    public void MonthEqualsToNPaymentsInPendingGivesZero_Test()
+    {
+        // Arrange
+        double amount = 10000;
+        double interest = 0.001;
+        int npayments = 12;
+        int month = 12;
+        double expected = 0;
+ 
+        // Act 
+        double output = bc.pending(amount, interest, npayments, month);
+ 
+        // Assert
+        assertEquals(expected, output, 0.0001);
+    }
+
+    /**
+     * Si a Pending se establece como valor de month uno mayor que npayments,
+     * el output debe ser cero
+     */
+    @Test
+    public void MonthGreaterThanNPaymentsInPendingGivesZero_Test()
+    {
+        // Arrange
+        double amount = 10000;
+        double interest = 0.001;
+        int npayments = 12;
+        int month = 14;
+        double expected = 0;
+ 
+        // Act 
+        double output = bc.pending(amount, interest, npayments, month);
+ 
+        // Assert
+        assertEquals(expected, output);
+    }
+
+    /**
+     * Si a Pending se establece como valor de month negativo,
+     * se lanza una excepción
+     */
+    @Test
+    public void NegativeMonthValueInPendingIsNotPossible_Test()
+    {
+        // Arrange
+        double amount = 10000;
+        double interest = 0.001;
+        int npayments = 12;
+        int month = -3;
+        Class<IllegalArgumentException> expected = IllegalArgumentException.class;
+        String expectedMsg = "Month value cannot be negative";
+ 
+        // Act 
+        Executable output = () -> bc.pending(amount, interest, npayments, month);
+ 
+        // Assert
+        assertThrows(expected, output, expectedMsg);
+    }
+
+
 }
