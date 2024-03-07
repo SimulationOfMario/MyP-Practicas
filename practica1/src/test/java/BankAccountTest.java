@@ -273,7 +273,7 @@ public class BankAccountTest
         assertThrows(expected, input, expectedMsg);
     }
 
-     /**
+    /**
      * Realizar una llamada a Payment con un valor de número de pagos negativo
      * ocasiona una excepción.
      */
@@ -286,6 +286,27 @@ public class BankAccountTest
         int npayments = -6;
         Class<IllegalArgumentException> expected = IllegalArgumentException.class;
         String expectedMsg = "Number of payments cannot be negative or zero";
+
+        // Act 
+        Executable input = () -> bc.payment(total_amount, interest, npayments);
+
+        // Assert
+        assertThrows(expected, input, expectedMsg);
+    }
+
+    /**
+     * Realizar una llamada a Payment con un valor de total amount negativo
+     * ocasiona una excepción.
+     */
+    @Test
+    public void NegativeTotalAmountPaymentIsNotPossible_Test()
+    {
+        // Arrange
+        double total_amount = -100;
+        double interest = 0.05;
+        int npayments = 6;
+        Class<IllegalArgumentException> expected = IllegalArgumentException.class;
+        String expectedMsg = "Total amount cannot be negative";
 
         // Act 
         Executable input = () -> bc.payment(total_amount, interest, npayments);
@@ -400,5 +421,135 @@ public class BankAccountTest
         assertThrows(expected, output, expectedMsg);
     }
 
+    /**
+     * Si a Pending se establece como valor de npayments cero,
+     * se lanza una excepción
+     */
+    @Test
+    public void ZeroNPaymentValueInPendingIsNotPossible_Test()
+    {
+        // Arrange
+        double amount = 10000;
+        double interest = 0.001;
+        int npayments = 0;
+        int month = 3;
+        Class<IllegalArgumentException> expected = IllegalArgumentException.class;
+        String expectedMsg = "Number of payments cannot be negative or zero";
+ 
+        // Act 
+        Executable output = () -> bc.pending(amount, interest, npayments, month);
+ 
+        // Assert
+        assertThrows(expected, output, expectedMsg);
+    }
+
+    /**
+     * Si a Pending se establece como valor de npayments negativo,
+     * se lanza una excepción
+     */
+    @Test
+    public void NegativeNPaymentValueInPendingIsNotPossible_Test()
+    {
+        // Arrange
+        double amount = 10000;
+        double interest = 0.001;
+        int npayments = 0;
+        int month = 3;
+        Class<IllegalArgumentException> expected = IllegalArgumentException.class;
+        String expectedMsg = "Number of payments cannot be negative or zero";
+ 
+        // Act 
+        Executable output = () -> bc.pending(amount, interest, npayments, month);
+ 
+        // Assert
+        assertThrows(expected, output, expectedMsg);
+    }
+
+    /**
+     * Si a Pending se establece como valor de interest cero,
+     * se lanza una excepción
+     */
+    @Test
+    public void ZeroInterestValueInPendingIsNotPossible_Test()
+    {
+        // Arrange
+        double amount = 10000;
+        double interest = 0;
+        int npayments = 10;
+        int month = 3;
+        Class<IllegalArgumentException> expected = IllegalArgumentException.class;
+        String expectedMsg = "Interest cannot be negative or zero";
+ 
+        // Act 
+        Executable output = () -> bc.pending(amount, interest, npayments, month);
+ 
+        // Assert
+        assertThrows(expected, output, expectedMsg);
+    }
+
+    /**
+     * Si a Pending se establece como valor de interest negativo,
+     * se lanza una excepción
+     */
+    @Test
+    public void NegativeInterestValueInPendingIsNotPossible_Test()
+    {
+        // Arrange
+        double amount = 10000;
+        double interest = -0.01;
+        int npayments = 10;
+        int month = 3;
+        Class<IllegalArgumentException> expected = IllegalArgumentException.class;
+        String expectedMsg = "Interest cannot be negative or zero";
+ 
+        // Act 
+        Executable output = () -> bc.pending(amount, interest, npayments, month);
+ 
+        // Assert
+        assertThrows(expected, output, expectedMsg);
+    }
+
+    /**
+     * Si a Pending se establece como valor de amount cero,
+     * devuelve como output cero
+     */
+    @Test
+    public void ZeroAmountValueInPendingGivesZero_Test()
+    {
+        // Arrange
+        double amount = 0;
+        double interest = 0.001;
+        int npayments = 10;
+        int month = 3;
+        double expected = 0;
+ 
+        // Act 
+        double output = bc.pending(amount, interest, npayments, month);
+ 
+        // Assert
+        assertEquals(expected, output);
+    }
+
+    /**
+     * Si a Pending se establece como valor de amount negativo,
+     * se lanza una excepción
+     */
+    @Test
+    public void NegativeAmountValueInPendingIsNotPossible_Test()
+    {
+        // Arrange
+        double amount = -1000;
+        double interest = 0.001;
+        int npayments = 10;
+        int month = 3;
+        Class<IllegalArgumentException> expected = IllegalArgumentException.class;
+        String expectedMsg = "Amount cannot be negative or zero";
+ 
+        // Act 
+        Executable output = () -> bc.pending(amount, interest, npayments, month);
+ 
+        // Assert
+        assertThrows(expected, output, expectedMsg);
+    }
 
 }

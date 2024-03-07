@@ -45,6 +45,8 @@ public class BankAccount
         if(npayments <= 0) 
             throw new IllegalArgumentException("Number of payments cannot be negative or zero");
         
+        if(total_amount < 0) 
+            throw new IllegalArgumentException("Total amount cannot be negative");
 
         return total_amount * (interest * Math.pow((1 + interest), npayments) / (Math.pow((1 + interest), npayments) - 1));
     }
