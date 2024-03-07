@@ -11,6 +11,9 @@ public class BankAccount
 
     public boolean withdraw(int amount) 
     {
+        if (amount < 0)
+            throw new IllegalArgumentException("Amount cannot be negative");
+
         if(balance >= amount) 
         {
             balance -= amount;
@@ -36,6 +39,13 @@ public class BankAccount
     // Calculate the payment per month for a loan
     public double payment(double total_amount, double interest, int npayments)
     {
+        if(interest <= 0) 
+            throw new IllegalArgumentException("Interest cannot be negative or zero");
+
+        if(npayments <= 0) 
+            throw new IllegalArgumentException("Number of payments cannot be negative or zero");
+        
+
         return total_amount * (interest * Math.pow((1 + interest), npayments) / (Math.pow((1 + interest), npayments) - 1));
     }
 

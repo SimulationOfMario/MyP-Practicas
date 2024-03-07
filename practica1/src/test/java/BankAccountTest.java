@@ -136,7 +136,7 @@ public class BankAccountTest
      * implica que el balance se quede a cero.
      */
     @Test
-    public void BalanceAfterTheCompleteBalanceWithdrawIsZero_Test()
+    public void BalanceAfterACompleteBalanceWithdrawIsZero_Test()
     {
         // Arrange
         int amount = bc.getBalance();
@@ -172,6 +172,25 @@ public class BankAccountTest
     }
 
     /**
+     * Realizar una retirada de dinero pero como amount se indica un
+     * número negativo resulta en una excepción.
+     */
+    @Test
+    public void NegativeAmountWithdrawIsNotPossible_Test()
+    {
+        // Arrange
+        Class<IllegalArgumentException> expected = IllegalArgumentException.class;
+        int amount = -10;
+        String expectedMsg = "Amount cannot be negative";
+
+        // Act
+        Executable input = () -> bc.withdraw(amount);
+
+        // Assert
+        assertThrows(expected, input, expectedMsg);
+    }
+
+    /**
      * Realizar una llamada a Payment con unos valores aceptables proporciona
      * la salida que debe ser con un delta de 0.001 
      */
@@ -189,6 +208,90 @@ public class BankAccountTest
 
         // Assert
         assertEquals(expected, output, 0.001);
+    }
+
+    /**
+     * Realizar una llamada a Payment con un valor de interés cero
+     * ocasiona una excepción.
+     */
+    @Test
+    public void ZeroInterestPaymentIsNotPossible_Test()
+    {
+        // Arrange
+        double total_amount = 10000;
+        double interest = 0;
+        int npayments = 12;
+        Class<IllegalArgumentException> expected = IllegalArgumentException.class;
+        String expectedMsg = "Interest cannot be negative or zero";
+
+        // Act 
+        Executable input = () -> bc.payment(total_amount, interest, npayments);
+
+        // Assert
+        assertThrows(expected, input, expectedMsg);
+    }
+
+     /**
+     * Realizar una llamada a Payment con un valor de interés negativo
+     * ocasiona una excepción.
+     */
+    @Test
+    public void NegativeInterestPaymentIsNotPossible_Test()
+    {
+        // Arrange
+        double total_amount = 10000;
+        double interest = -0.02;
+        int npayments = 12;
+        Class<IllegalArgumentException> expected = IllegalArgumentException.class;
+        String expectedMsg = "Interest cannot be negative or zero";
+
+        // Act 
+        Executable input = () -> bc.payment(total_amount, interest, npayments);
+
+        // Assert
+        assertThrows(expected, input, expectedMsg);
+    }
+
+    /**
+     * Realizar una llamada a Payment con un valor de número de pagos de cero
+     * ocasiona una excepción.
+     */
+    @Test
+    public void ZeroNPaymentsPaymentIsNotPossible_Test()
+    {
+        // Arrange
+        double total_amount = 10000;
+        double interest = 0.05;
+        int npayments = 0;
+        Class<IllegalArgumentException> expected = IllegalArgumentException.class;
+        String expectedMsg = "Number of payments cannot be negative or zero";
+
+        // Act 
+        Executable input = () -> bc.payment(total_amount, interest, npayments);
+
+        // Assert
+        assertThrows(expected, input, expectedMsg);
+    }
+
+     /**
+     * Realizar una llamada a Payment con un valor de número de pagos negativo
+     * ocasiona una excepción.
+     */
+    @Test
+    public void NegativeNPaymentsPaymentIsNotPossible_Test()
+    {
+        // Arrange
+        double total_amount = 10000;
+        double interest = 0.05;
+        int npayments = -6;
+        Class<IllegalArgumentException> expected = IllegalArgumentException.class;
+        String expectedMsg = "Number of payments cannot be negative or zero";
+
+        // Act 
+        Executable input = () -> bc.payment(total_amount, interest, npayments);
+
+        // Assert
+        assertThrows(expected, input, expectedMsg);
     }
 
     /**
